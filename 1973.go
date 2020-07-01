@@ -5,36 +5,41 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 )
 
 var cases, i int
-var total int64
+var total, number int64
+var list []byte
 
 func main() {
 	scanner := bufio.NewScanner(os.Stdin)
-	// scanner.Split(bufio.ScanWords)
+	scanner.Buffer(list, 1000000*9)
+	fmt.Scan(&cases)
 
-	amount := cases
-	steal := cases
-	min := 0
-	flag := true
+	amount, steal := cases, cases
+	min, flag := 0, true
 
 	for scanner.Scan() {
-		number, _ := strconv.Atoi(scanner.Text())
-		fmt.Println(number)
+		list := scanner.Text()
 
-		total = int64(number)
+		numbers := strings.Fields(list)
 
-		if number == 1 {
-			min = i + 1
+		for _, v := range numbers {
+			number, _ = strconv.ParseInt(v, 10, 64)
+			total += number
+
+			if number == 1 {
+				min = i + 1
+			}
+
+			if flag && number&1 == 0 {
+				flag = false
+				amount = i + 1
+				steal = amount + (i - min)
+			}
+			i++
 		}
-
-		if flag && number&1 == 0 {
-			flag = false
-			amount = i + 1
-			steal = amount + (i - min)
-		}
-		i++
 	}
 
 	fmt.Printf("%d %d\n", amount, total-int64(steal))
