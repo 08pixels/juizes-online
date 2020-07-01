@@ -14,7 +14,7 @@ var list []byte
 
 func main() {
 	scanner := bufio.NewScanner(os.Stdin)
-	scanner.Buffer(list, 1000000*9)
+	scanner.Buffer(list, 1000000*8)
 	fmt.Scan(&cases)
 
 	amount, steal := cases, cases
