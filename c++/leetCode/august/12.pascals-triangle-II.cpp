@@ -1,18 +1,19 @@
 class Solution {
 public:
-    vector<int> getRow(int rowIndex) {        
-        vector<int> line(rowIndex + 1);
-        vector<int> tmp(rowIndex + 1);
+    vector<int> getRow(int rowIndex) {
         
-        line[0] = tmp[0] = 1;
+        vector<int> memo[2];
+        
+        memo[0].resize(rowIndex + 1);
+        memo[1].resize(rowIndex + 1);
+
+        memo[0][0] = memo[1][0] = 1;
         
         for(int i = 1; i <= rowIndex; ++i) {
             for(int j = 1; j <= i; ++j)
-                tmp[j] = line[j] + line[j - 1];
-
-            line = tmp;
+                memo[i&1][j] = memo[~i&1][j] + memo[~i&1][j - 1];
         }
         
-        return line;
+        return memo[rowIndex&1];
     }
 };
