@@ -8,9 +8,7 @@ bool compare(vector<int> &a, vector<int> &b) {
 
 class Solution {
 public:
-    
 
-    
     int eraseOverlapIntervals(vector<vector<int>>& intervals) {
         int n = intervals.size();
         sort(intervals.begin(), intervals.end(), compare);
