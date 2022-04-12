@@ -3,9 +3,6 @@ const [testCases, ...tests] = input.split('\n');
 
 const isPrime = (number) => {
 
-    if (number == 1)
-        return false;
-
     for(let i=2; i*i <= number; ++i) {
         if (number % i === 0)
             return false;
@@ -14,9 +11,9 @@ const isPrime = (number) => {
     return true;
 }
 
-for(const testNumber of tests) {
+for(let i=0; i<testCases; ++i) {
 
-    const result = isPrime(testNumber);
+    const result = isPrime(Number(tests[i]));
 
     if (result)
         console.log('Prime')
