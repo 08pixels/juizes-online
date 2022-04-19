@@ -1,33 +1,44 @@
 var recoverSecret = function(triplets) {
-    const before = {}
+    const ancestor = triplets.reduce((anc, triplet) => {
+        const [x, y, z] = triplet
 
-    for (const [x,y,z] of triplets) {
-        if (!before[x]) before[x] = []
-        if (!before[y]) before[y] = []
-        if (!before[z]) before[z] = []
+        anc[x] = (anc[x] || [])
+        anc[y] = (anc[y] || []).concat([x])
+        anc[z] = (anc[z] || []).concat([x, y])
 
-        before[z].push(x, y)
-        before[y].push(x)
-    }
+        return anc
+    }, {})
 
     let secretWord = ''
-    let stringLength = Object.keys(before).length
+    let stringLength = Object.keys(ancestor).length
+
+    const min = (subsetA, subsetB) => (
+        subsetA[1].length < subsetB[1].length
+            ? subsetA
+            : subsetB
+    )
 
     while (stringLength--) {
-        let char = ''
-        let smaller = 999
+        const [char, value] = Object.entries(ancestor).reduce(min)
 
-        for (const [key, value] of Object.entries(before)) {
-            if (value.length < smaller)
-                smaller = value.length, char = key
-        }
-
-        for (const [key, value] of Object.entries(before))
-            before[key] = value.filter(item => item != char)
+        for (const [key, value] of Object.entries(ancestor))
+            ancestor[key] = value.filter(item => item != char)
 
         secretWord += char
-        delete before[char]
+        delete ancestor[char]
     }
 
     return secretWord
 }
+
+triplets1 = [
+    ['t','u','p'],
+    ['w','h','i'],
+    ['t','s','u'],
+    ['a','t','s'],
+    ['h','a','p'],
+    ['t','i','s'],
+    ['w','h','s']
+  ]
+
+console.log(recoverSecret(triplets1))
