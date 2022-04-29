@@ -1,4 +1,4 @@
-### [How many are smaller than me II?]
+### [How many are smaller than me II?](https://www.codewars.com/kata/56a1c63f3bc6827e13000006/javascript)
 
 This is a hard version of [How many are smaller than me?](https://www.codewars.com/kata/56a1c074f87bc2201200002e). If you have troubles solving this one, have a look at the easier kata first.
 
